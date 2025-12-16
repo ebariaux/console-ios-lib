@@ -23,6 +23,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - name: Install xcresultparser
+        run: |
+          brew install xcresultparser
 
       - name: Swift Package Manager cache
         uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4
