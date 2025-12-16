@@ -44,10 +44,11 @@ jobs:
       - name: Extract JUnit test report
         run: |
           xcresultparser -o junit ORLib.xcresult > junit.xml
-        if: always()
+        if: ${{ !cancelled() }}       # run this step even if previous step failed
 
       - name: Publish Test Report with Insights
         uses: ctrf-io/github-test-reporter@v1
+        if: ${{ !cancelled() }}       # run this step even if previous step failed
         with:
           report-path: 'junit.xml'
           integrations-config: |
@@ -69,4 +70,12 @@ jobs:
           upload-artifact: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        if: always()
+
+      - name: Test Report
+        uses: dorny/test-reporter@v2
+        if: ${{ !cancelled() }}       # run this step even if previous step failed
+        with:
+          name: ORLib Tests            # Name of the check run which will be created
+          path: junit.xml    # Path to test results
+          reporter: jest-junit        # Format of test results
+
