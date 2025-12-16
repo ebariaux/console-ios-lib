@@ -44,6 +44,7 @@ jobs:
       - name: Extract JUnit test report
         run: |
           xcresultparser -o junit ORLib.xcresult > junit.xml
+        if: always()
 
       - name: Publish Test Report with Insights
         uses: ctrf-io/github-test-reporter@v1
