@@ -42,7 +42,7 @@ jobs:
           -destination 'platform=iOS Simulator,name=iPhone 16' -scheme ORLib -resultBundlePath ORLib.xcresult
 
       - name: Extract JUnit test report
-        run |
+        run: |
           xcresultparser -o junit ORLib.xcresult > junit.xml
 
       - name: Publish Test Report with Insights
