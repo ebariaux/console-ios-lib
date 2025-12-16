@@ -39,4 +39,18 @@ jobs:
       - name: Build and test
         run: |
           xcodebuild test -project ORLib.xcodeproj -sdk iphoneos \
-          -destination 'platform=iOS Simulator,name=iPhone 16' -scheme ORLib
+          -destination 'platform=iOS Simulator,name=iPhone 16' -scheme ORLib -resultBundlePath ORLib.xcresult
+
+      - name: Extract JUnit test report
+        run |
+          xcresultparser -o junit ORLib.xcresult > junit.xml
+
+      - name: Publish Test Report with Insights
+        uses: ctrf-io/github-test-reporter@v1
+        with:
+          report-path: 'junit.xml'
+          github-report: true
+          upload-artifact: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        if: always()
