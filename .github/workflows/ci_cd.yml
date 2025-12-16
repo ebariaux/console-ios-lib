@@ -1,6 +1,8 @@
 name: CI/CD
 
 on:
+  workflow_dispatch
+
   # Push on main excluding tags
   push:
     branches:
